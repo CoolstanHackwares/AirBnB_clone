@@ -16,10 +16,8 @@ class BaseModel:
         """
         tform = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = kwargs.get('id', str(uuid4()))
-        self.created_at = self.parse_datetime(kwargs.get('created_at'))
-        if kwargs.get('created_at') else datetime.today()
-        self.updated_at = self.parse_datetime(kwargs.get('updated_at'))
-        if kwargs.get('updated_at') else datetime.today()
+        self.created_at = self.parse_datetime(kwargs.get('created_at')) if kwargs.get('created_at') else datetime.today()
+        self.updated_at = self.parse_datetime(kwargs.get('updated_at')) if kwargs.get('updated_at') else datetime.today()
         if not kwargs:
             models.storage.new(self)
 
@@ -40,8 +38,8 @@ class BaseModel:
             "__class__": self.__class__.__name__
         }
 
-    def __str__(self):
-        """Return the print/str representation of the BaseModel instance."""
+        def __str__(self):
+            """Return the print/str representation of the BaseModel instance."""
         return "{}({}) {}".format(type(self).__name__, self.id, self.__dict__)
 
     @staticmethod
