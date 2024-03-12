@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-"""Defines the class base model"""
+"""Defines the BaseModel class for the AirBnB Console."""
 import models
 from uuid import uuid4
 from datetime import datetime
 
 
 class BaseModel:
-    """Represents the BaseModel for the AirBnB clone project."""
+    """Represents the BaseModel of the HBnB project."""
 
     def __init__(self, *args, **kwargs):
         """Initialize a new BaseModel.
@@ -15,10 +15,16 @@ class BaseModel:
             **kwargs (dict): Key/value pairs of attributes.
         """
         tform = "%Y-%m-%dT%H:%M:%S.%f"
-        self.id = kwargs.get('id', str(uuid4()))
-        self.created_at = self.parse_datetime(kwargs.get('created_at')) if kwargs.get('created_at') else datetime.today()
-        self.updated_at = self.parse_datetime(kwargs.get('updated_at')) if kwargs.get('updated_at') else datetime.today()
-        if not kwargs:
+        self.id = str(uuid4())
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    self.__dict__[k] = datetime.strptime(v, tform)
+                else:
+                    self.__dict__[k] = v
+        else:
             models.storage.new(self)
 
     def save(self):
@@ -31,19 +37,13 @@ class BaseModel:
         Includes the key/value pair __class__ representing
         the class name of the object.
         """
-        return {
-            "id": self.id,
-            "created_at": self.created_at.isoformat(),
-            "updated_at": self.updated_at.isoformat(),
-            "__class__": self.__class__.__name__
-        }
+        rdict = self.__dict__.copy()
+        rdict["created_at"] = self.created_at.isoformat()
+        rdict["updated_at"] = self.updated_at.isoformat()
+        rdict["__class__"] = self.__class__.__name__
+        return rdict
 
-        def __str__(self):
-            """Return the print/str representation of the BaseModel instance."""
-        return "{}({}) {}".format(type(self).__name__, self.id, self.__dict__)
-
-    @staticmethod
-    def parse_datetime(date_string):
-        """Parse a datetime string and return a datetime object."""
-        if date_string:
-            return datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%f")
+    def __str__(self):
+        """Return the print/str representation of the BaseModel instance."""
+        clname = self.__class__.__name__
+        return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
