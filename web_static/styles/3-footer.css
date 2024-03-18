@@ -1,0 +1,15 @@
+/**
+ * !!!!!!!! Global Styling for the AirBnB Clone !!!!!!!!
+ **/ 
+
+/* Footer style */
+footer {
+    background-color: #484848;
+    color: white;
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #CCCCCC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

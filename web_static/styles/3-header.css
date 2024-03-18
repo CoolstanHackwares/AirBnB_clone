@@ -1,0 +1,23 @@
+/**
+ * !!!!!!!! Global Styling for the AirBnB Clone !!!!!!!!
+ **/ 
+
+/* Header style */
+Header {
+    background-color: #484848;
+    color: white;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    background-image: url("https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 30px;
+    width: auto;
+    margin-left: 20px;
+}
